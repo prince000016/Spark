@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us – Apex Cloud & IT Services</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap">
+<style>
+  :root {
+    --bg: #f8f9fc; --bg2: #ffffff; --fg: #0f1117; --fg2: #4a5568;
+    --accent: #1a56db; --accent2: #1041a3; --accent-soft: #e8eefb;
+    --border: #e2e8f0; --card: #ffffff; --nav-bg: rgba(248,249,252,0.95);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117; --bg2: #161b22; --fg: #e6edf3; --fg2: #8b949e;
+      --accent: #4c8ef7; --accent2: #79acfc; --accent-soft: #0d2149;
+      --border: #21262d; --card: #161b22; --nav-bg: rgba(13,17,23,0.95);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1117; --bg2: #161b22; --fg: #e6edf3; --fg2: #8b949e;
+    --accent: #4c8ef7; --accent2: #79acfc; --accent-soft: #0d2149;
+    --border: #21262d; --card: #161b22; --nav-bg: rgba(13,17,23,0.95);
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; }
+  img { max-width: 100%; }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--nav-bg); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 max(16px, env(safe-area-inset-left,0px)) 0 max(16px, env(safe-area-inset-right,0px));
+    display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 24px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; font-weight: 800; font-family: 'Syne', sans-serif; }
+  .logo-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); line-height: 1.2; }
+  .logo-sub { font-size: 10px; font-weight: 400; color: var(--fg2); }
+  .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--fg2); font-size: 14px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); background: var(--accent-soft); }
+  .nav-cta { background: var(--accent); color: #fff !important; border-radius: 8px; padding: 8px 16px !important; }
+  .nav-cta:hover { background: var(--accent2) !important; }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--fg); padding: 4px; }
+  .mobile-menu { display: none; }
+  .container { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left,0px)); padding-right: max(16px, env(safe-area-inset-right,0px)); }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: linear-gradient(160deg, var(--bg) 0%, var(--accent-soft) 100%);
+    padding-block: 60px 52px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .breadcrumb { font-size: 13px; color: var(--fg2); margin-bottom: 16px; }
+  .breadcrumb a { color: var(--accent); text-decoration: none; }
+  .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: var(--fg); text-wrap: balance; margin-bottom: 14px; }
+  .page-header p { font-size: 16px; color: var(--fg2); max-width: 54ch; margin: 0 auto; line-height: 1.7; }
+
+  section { padding-block: 64px; }
+  .section-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 10px; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(22px, 3vw, 34px); font-weight: 800; color: var(--fg); text-wrap: balance; margin-bottom: 16px; line-height: 1.15; }
+
+  /* STORY */
+  .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .story-text p { font-size: 15px; color: var(--fg2); line-height: 1.75; margin-bottom: 18px; }
+  .story-text p:last-child { margin-bottom: 0; }
+  .story-facts { display: flex; flex-direction: column; gap: 0; }
+  .fact-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .fact-row:last-child { border-bottom: none; }
+  .fact-label { font-size: 13px; color: var(--fg2); font-weight: 500; }
+  .fact-val { font-size: 14px; font-weight: 600; color: var(--fg); text-align: right; max-width: 55%; }
+
+  /* MISSION */
+  .mission-bg { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .mission-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+  .mission-card { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 28px; }
+  .mission-icon { font-size: 28px; margin-bottom: 14px; }
+  .mission-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--fg); margin-bottom: 10px; }
+  .mission-card p { font-size: 14px; color: var(--fg2); line-height: 1.65; }
+
+  /* TEAM */
+  .team-bg { background: var(--bg); }
+  .team-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; max-width: 640px; }
+  .team-role { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); background: var(--accent-soft); padding: 3px 10px; border-radius: 999px; display: inline-block; margin-bottom: 14px; }
+  .team-name { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: var(--fg); margin-bottom: 6px; }
+  .team-title { font-size: 14px; color: var(--fg2); margin-bottom: 18px; }
+  .team-bio { font-size: 14px; color: var(--fg2); line-height: 1.7; margin-bottom: 24px; }
+  .team-details { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--border); padding-top: 20px; }
+  .team-detail-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; align-items: flex-start; }
+  .team-detail-row:last-child { border-bottom: none; }
+  .detail-key { color: var(--fg2); font-weight: 500; min-width: 120px; flex-shrink: 0; }
+  .detail-val { color: var(--fg); font-weight: 600; }
+
+  /* ADDRESS */
+  .address-bg { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .address-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .address-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 28px; }
+  .address-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .address-line { font-size: 14px; color: var(--fg2); line-height: 2; }
+  .address-line strong { color: var(--fg); }
+
+  footer {
+    background: var(--fg); color: rgba(255,255,255,0.7);
+    padding-block: 40px 28px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left,0px)); padding-right: max(16px, env(safe-area-inset-right,0px)); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 12px; }
+  .footer-links a:hover { color: #fff; }
+  .legal-name { font-weight: 600; color: rgba(255,255,255,0.8); }
+
+  @media (max-width: 768px) {
+    .story-grid, .address-grid { grid-template-columns: 1fr; gap: 32px; }
+    .mission-cards { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 4px; background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px max(16px, env(safe-area-inset-left,0px)); }
+    .mobile-menu a { text-decoration: none; color: var(--fg); font-size: 15px; font-weight: 500; padding: 10px 12px; border-radius: 8px; }
+    .mobile-menu a:hover { background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">A</div>
+      <div>
+        <div class="logo-text">Apex Cloud & IT Services</div>
+        <div class="logo-sub">Enterprise IT Solutions</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About Us</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="policies.html">Policies</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('mobile-nav').classList.toggle('open')" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="policies.html">Policies</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> → About Us</div>
+    <h1>About Apex Cloud & IT Services</h1>
+    <p>We are an India-based technology company providing enterprise-grade web hosting, cloud infrastructure, and IT solutions to businesses since 2019.</p>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-text">
+        <div class="section-label">Our Story</div>
+        <h2 class="section-title">Powering Indian Businesses with Reliable IT</h2>
+        <p>Apex Cloud & IT Services was founded in 2019 by <strong>ISHWAR PRASAD</strong> with a simple mission: to give Indian businesses access to enterprise-quality cloud infrastructure and IT services at fair, transparent prices.</p>
+        <p>Starting as a web hosting provider, we have grown into a full-service IT solutions company serving startups, SMEs, and enterprises across India. We manage hundreds of servers, support thousands of websites, and provide ongoing IT maintenance to organisations in multiple sectors.</p>
+        <p>Every service we offer is delivered by our in-house technical team. We do not resell third-party services without disclosing it. We believe in honest billing, responsive support, and long-term partnerships with our clients.</p>
+      </div>
+      <div>
+        <div class="story-facts">
+          <div class="fact-row">
+            <span class="fact-label">Legal / Proprietor Name</span>
+            <span class="fact-val">ISHWAR PRASAD</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Business Name</span>
+            <span class="fact-val">Apex Cloud & IT Services</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Founded</span>
+            <span class="fact-val">2019</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Business Type</span>
+            <span class="fact-val">Sole Proprietorship</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Industry</span>
+            <span class="fact-val">Cloud Hosting & IT Services</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Country</span>
+            <span class="fact-val">India</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Clients Served</span>
+            <span class="fact-val">500+</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Support Hours</span>
+            <span class="fact-val">24 hours / 7 days</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mission-bg">
+  <div class="container">
+    <div class="section-label">What We Stand For</div>
+    <h2 class="section-title">Our Mission, Vision & Values</h2>
+    <div class="mission-cards">
+      <div class="mission-card">
+        <div class="mission-icon">🎯</div>
+        <h3>Mission</h3>
+        <p>To provide reliable, affordable, and scalable cloud infrastructure and IT services that empower Indian businesses to operate efficiently and grow with confidence.</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-icon">🔭</div>
+        <h3>Vision</h3>
+        <p>To become India's most trusted IT services partner — known for transparency, technical excellence, and customer-first service delivery at every scale.</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-icon">⚖️</div>
+        <h3>Values</h3>
+        <p>Transparency in pricing. Honesty in support. Accountability in delivery. We treat every client's business as if it were our own.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="team-bg">
+  <div class="container">
+    <div class="section-label">Leadership</div>
+    <h2 class="section-title" style="margin-bottom:36px;">The Person Behind Apex</h2>
+    <div class="team-card">
+      <span class="team-role">Founder & Proprietor</span>
+      <div class="team-name">ISHWAR PRASAD</div>
+      <div class="team-title">Founder, Apex Cloud & IT Services</div>
+      <p class="team-bio">With over 5 years of hands-on experience in cloud infrastructure, server management, and enterprise IT support, Ishwar Prasad founded Apex Cloud & IT Services to address the gap between expensive enterprise IT solutions and the needs of growing Indian businesses. He leads the technical and customer support operations directly, ensuring every client receives expert and personalised service.</p>
+      <div class="team-details">
+        <div class="team-detail-row">
+          <span class="detail-key">Legal Name</span>
+          <span class="detail-val">ISHWAR PRASAD</span>
+        </div>
+        <div class="team-detail-row">
+          <span class="detail-key">Role</span>
+          <span class="detail-val">Sole Proprietor & Technical Lead</span>
+        </div>
+        <div class="team-detail-row">
+          <span class="detail-key">Business</span>
+          <span class="detail-val">Apex Cloud & IT Services</span>
+        </div>
+        <div class="team-detail-row">
+          <span class="detail-key">Expertise</span>
+          <span class="detail-val">Cloud Infrastructure, Server Management, Cybersecurity, IT Support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="address-bg">
+  <div class="container">
+    <div class="section-label">Where We Operate</div>
+    <h2 class="section-title" style="margin-bottom:36px;">Our Operating Address</h2>
+    <div class="address-grid">
+      <div class="address-card">
+        <h3>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M8 1C5.24 1 3 3.24 3 6c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5z"/><circle cx="8" cy="6" r="2"/></svg>
+          Full Operating Address
+        </h3>
+        <div class="address-line">
+          <strong>Apex Cloud & IT Services</strong><br>
+          Proprietor: ISHWAR PRASAD<br>
+          [House/Flat No.], [Street / Colony Name]<br>
+          [City], [State] – [PIN Code]<br>
+          India
+        </div>
+        <p style="font-size:12px;color:var(--fg2);margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">Update this address with your actual registered address before deploying.</p>
+      </div>
+      <div class="address-card">
+        <h3>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 8h6M8 5v6"/></svg>
+          Contact Details
+        </h3>
+        <div class="address-line">
+          <strong>Email</strong><br>
+          support@apexcloudit.in<br><br>
+          <strong>Phone</strong><br>
+          +91-XXXXX-XXXXX<br><br>
+          <strong>Business Hours</strong><br>
+          Mon–Sat: 9:00 AM – 8:00 PM IST<br>
+          Emergency Support: 24/7
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 Apex Cloud & IT Services. Proprietor: <span class="legal-name">ISHWAR PRASAD</span>. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="policies.html">Policies</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

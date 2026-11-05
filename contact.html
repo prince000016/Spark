@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us – Apex Cloud & IT Services</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap">
+<style>
+  :root {
+    --bg: #f8f9fc; --bg2: #ffffff; --fg: #0f1117; --fg2: #4a5568;
+    --accent: #1a56db; --accent2: #1041a3; --accent-soft: #e8eefb;
+    --border: #e2e8f0; --card: #ffffff; --nav-bg: rgba(248,249,252,0.95);
+    --success: #0f7b55; --success-bg: #ecfdf5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117; --bg2: #161b22; --fg: #e6edf3; --fg2: #8b949e;
+      --accent: #4c8ef7; --accent2: #79acfc; --accent-soft: #0d2149;
+      --border: #21262d; --card: #161b22; --nav-bg: rgba(13,17,23,0.95);
+      --success: #34d399; --success-bg: #022c22;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1117; --bg2: #161b22; --fg: #e6edf3; --fg2: #8b949e;
+    --accent: #4c8ef7; --accent2: #79acfc; --accent-soft: #0d2149;
+    --border: #21262d; --card: #161b22; --nav-bg: rgba(13,17,23,0.95);
+    --success: #34d399; --success-bg: #022c22;
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; }
+  nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left,0px)) 0 max(16px, env(safe-area-inset-right,0px)); display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; font-weight: 800; font-family: 'Syne', sans-serif; }
+  .logo-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); line-height: 1.2; }
+  .logo-sub { font-size: 10px; color: var(--fg2); }
+  .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--fg2); font-size: 14px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); background: var(--accent-soft); }
+  .nav-cta { background: var(--accent); color: #fff !important; border-radius: 8px; padding: 8px 16px !important; }
+  .nav-cta:hover { background: var(--accent2) !important; }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--fg); padding: 4px; }
+  .mobile-menu { display: none; }
+  .container { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left,0px)); padding-right: max(16px, env(safe-area-inset-right,0px)); }
+
+  .page-header { background: linear-gradient(160deg, var(--bg) 0%, var(--accent-soft) 100%); padding-block: 60px 52px; border-bottom: 1px solid var(--border); text-align: center; }
+  .breadcrumb { font-size: 13px; color: var(--fg2); margin-bottom: 16px; }
+  .breadcrumb a { color: var(--accent); text-decoration: none; }
+  .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: var(--fg); text-wrap: balance; margin-bottom: 14px; }
+  .page-header p { font-size: 16px; color: var(--fg2); max-width: 54ch; margin: 0 auto; line-height: 1.7; }
+
+  .main-grid { display: grid; grid-template-columns: 1fr 420px; gap: 48px; padding-block: 64px; align-items: start; }
+
+  /* INFO SIDE */
+  .info-block { margin-bottom: 32px; }
+  .info-block:last-child { margin-bottom: 0; }
+  .info-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 10px; }
+  .info-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--fg); margin-bottom: 12px; line-height: 1.2; }
+
+  .contact-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-bottom: 20px; display: flex; gap: 16px; align-items: flex-start; }
+  .contact-icon { width: 42px; height: 42px; background: var(--accent-soft); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--accent); font-size: 20px; }
+  .contact-label { font-size: 11px; font-weight: 700; color: var(--fg2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .contact-value { font-size: 15px; font-weight: 600; color: var(--fg); word-break: break-all; }
+  .contact-sub { font-size: 12px; color: var(--fg2); margin-top: 4px; }
+
+  .address-card { background: var(--card); border: 2px solid var(--accent); border-radius: 14px; padding: 24px; }
+  .address-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--fg); margin-bottom: 4px; }
+  .address-proprietor { font-size: 13px; color: var(--accent); font-weight: 600; margin-bottom: 14px; }
+  .address-text { font-size: 15px; color: var(--fg); line-height: 1.8; font-style: normal; }
+  .address-text strong { font-weight: 700; }
+
+  .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hours-item { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .hours-day { font-size: 12px; font-weight: 600; color: var(--fg2); margin-bottom: 4px; }
+  .hours-time { font-size: 14px; font-weight: 700; color: var(--fg); }
+  .hours-open { color: #0f7b55; font-size: 11px; font-weight: 600; }
+
+  /* FORM SIDE */
+  .form-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 36px 32px; position: sticky; top: 84px; }
+  .form-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--fg); margin-bottom: 6px; }
+  .form-desc { font-size: 13px; color: var(--fg2); margin-bottom: 28px; }
+  .form-group { margin-bottom: 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  label { display: block; font-size: 13px; font-weight: 600; color: var(--fg); margin-bottom: 6px; }
+  label span { color: #c0392b; }
+  input, select, textarea {
+    width: 100%; background: var(--bg); border: 1.5px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; font-family: inherit; font-size: 14px; color: var(--fg);
+    transition: border-color 0.15s; outline: none;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent); }
+  textarea { resize: vertical; min-height: 110px; }
+  .form-btn {
+    width: 100%; background: var(--accent); color: #fff; border: none; border-radius: 10px;
+    padding: 13px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: background 0.15s; margin-top: 6px;
+  }
+  .form-btn:hover { background: var(--accent2); }
+  .form-note { font-size: 11px; color: var(--fg2); text-align: center; margin-top: 12px; }
+  .success-box { background: var(--success-bg); border: 1px solid var(--success); border-radius: 10px; padding: 16px 18px; margin-top: 16px; display: none; }
+  .success-box p { font-size: 13px; color: var(--success); font-weight: 600; }
+
+  .map-placeholder { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; height: 220px; display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--fg2); font-size: 14px; }
+  .map-placeholder svg { opacity: 0.4; }
+
+  footer { background: var(--fg); color: rgba(255,255,255,0.7); padding-block: 40px 28px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left,0px)); padding-right: max(16px, env(safe-area-inset-right,0px)); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 12px; }
+  .footer-links a:hover { color: #fff; }
+  .legal-name { font-weight: 600; color: rgba(255,255,255,0.8); }
+
+  @media (max-width: 900px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .form-card { position: static; }
+  }
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .hours-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 4px; background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px max(16px, env(safe-area-inset-left,0px)); }
+    .mobile-menu a { text-decoration: none; color: var(--fg); font-size: 15px; font-weight: 500; padding: 10px 12px; border-radius: 8px; }
+    .mobile-menu a:hover { background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">A</div>
+      <div>
+        <div class="logo-text">Apex Cloud & IT Services</div>
+        <div class="logo-sub">Enterprise IT Solutions</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="policies.html">Policies</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="contact.html" class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('mobile-nav').classList.toggle('open')" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="policies.html">Policies</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> → Contact Us</div>
+    <h1>Get in Touch</h1>
+    <p>Have a question or ready to get started? Our team is here to help. Reach out through any channel below.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="main-grid">
+    <!-- LEFT: Info -->
+    <div>
+      <div class="info-block">
+        <div class="info-label">Operating Address</div>
+        <div class="address-card">
+          <div class="address-title">Apex Cloud & IT Services</div>
+          <div class="address-proprietor">Sole Proprietorship — ISHWAR PRASAD</div>
+          <address class="address-text">
+            <strong>[House/Flat No.], [Street / Colony Name]</strong><br>
+            [City], [State] – [PIN Code]<br>
+            India
+          </address>
+          <div style="font-size:12px;color:var(--fg2);margin-top:12px;">⚠️ Replace the placeholder above with your actual registered operating address before submitting to PayU.</div>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-label">Contact Channels</div>
+        <div class="contact-card">
+          <div class="contact-icon">✉</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">support@apexcloudit.in</div>
+            <div class="contact-sub">We respond within 24 business hours</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Phone / WhatsApp</div>
+            <div class="contact-value">+91-XXXXX-XXXXX</div>
+            <div class="contact-sub">Replace with your actual number</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">👤</div>
+          <div>
+            <div class="contact-label">Proprietor</div>
+            <div class="contact-value">ISHWAR PRASAD</div>
+            <div class="contact-sub">Founder & Sole Proprietor</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-label">Business Hours</div>
+        <div class="hours-grid">
+          <div class="hours-item">
+            <div class="hours-day">Monday – Friday</div>
+            <div class="hours-time">9:00 AM – 7:00 PM</div>
+            <div class="hours-open">Open</div>
+          </div>
+          <div class="hours-item">
+            <div class="hours-day">Saturday</div>
+            <div class="hours-time">10:00 AM – 4:00 PM</div>
+            <div class="hours-open">Open</div>
+          </div>
+          <div class="hours-item">
+            <div class="hours-day">Sunday</div>
+            <div class="hours-time">Emergency only</div>
+            <div class="hours-day">On-call support</div>
+          </div>
+          <div class="hours-item">
+            <div class="hours-day">24/7 Uptime</div>
+            <div class="hours-time">Server monitoring</div>
+            <div class="hours-open">Always active</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-label">Location</div>
+        <div class="map-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Update your address above to show location
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div>
+      <div class="form-card">
+        <div class="form-title">Send a Message</div>
+        <div class="form-desc">Fill in your details and we'll get back to you within 24 hours.</div>
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name <span>*</span></label>
+              <input type="text" id="fname" name="fname" placeholder="Rahul" required>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" name="lname" placeholder="Sharma">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address <span>*</span></label>
+            <input type="email" id="email" name="email" placeholder="rahul@company.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210">
+          </div>
+          <div class="form-group">
+            <label for="service">Service Interested In</label>
+            <select id="service" name="service">
+              <option value="">Select a service…</option>
+              <option>Web Hosting</option>
+              <option>Cloud Infrastructure / VPS</option>
+              <option>IT Support & Maintenance</option>
+              <option>Cybersecurity</option>
+              <option>Business Email Hosting</option>
+              <option>Backup & Recovery</option>
+              <option>Other / General Inquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message <span>*</span></label>
+            <textarea id="message" name="message" placeholder="Tell us about your requirements or any questions you have…" required></textarea>
+          </div>
+          <button type="submit" class="form-btn">Send Message →</button>
+          <p class="form-note">By submitting, you agree to our <a href="policies.html#privacy" style="color:var(--accent)">Privacy Policy</a>. We never share your data.</p>
+          <div class="success-box" id="successBox">
+            <p>✓ Message received! We'll reply to your email within 24 hours.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 Apex Cloud & IT Services. Proprietor: <span class="legal-name">ISHWAR PRASAD</span>. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="policies.html">Policies</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.querySelector('.form-btn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('successBox').style.display = 'block';
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#0f7b55';
+    document.getElementById('contactForm').reset();
+  }, 800);
+}
+</script>
+</body>
+</html>

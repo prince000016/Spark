@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing – Apex Cloud & IT Services</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap">
+<style>
+  :root {
+    --bg: #f8f9fc; --bg2: #ffffff; --fg: #0f1117; --fg2: #4a5568;
+    --accent: #1a56db; --accent2: #1041a3; --accent-soft: #e8eefb;
+    --border: #e2e8f0; --card: #ffffff; --nav-bg: rgba(248,249,252,0.95);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117; --bg2: #161b22; --fg: #e6edf3; --fg2: #8b949e;
+      --accent: #4c8ef7; --accent2: #79acfc; --accent-soft: #0d2149;
+      --border: #21262d; --card: #161b22; --nav-bg: rgba(13,17,23,0.95);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1117; --bg2: #161b22; --fg: #e6edf3; --fg2: #8b949e;
+    --accent: #4c8ef7; --accent2: #79acfc; --accent-soft: #0d2149;
+    --border: #21262d; --card: #161b22; --nav-bg: rgba(13,17,23,0.95);
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; }
+  nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left,0px)) 0 max(16px, env(safe-area-inset-right,0px)); display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; font-weight: 800; font-family: 'Syne', sans-serif; }
+  .logo-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); line-height: 1.2; }
+  .logo-sub { font-size: 10px; color: var(--fg2); }
+  .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--fg2); font-size: 14px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); background: var(--accent-soft); }
+  .nav-cta { background: var(--accent); color: #fff !important; border-radius: 8px; padding: 8px 16px !important; }
+  .nav-cta:hover { background: var(--accent2) !important; }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--fg); padding: 4px; }
+  .mobile-menu { display: none; }
+  .container { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left,0px)); padding-right: max(16px, env(safe-area-inset-right,0px)); }
+
+  .page-header { background: linear-gradient(160deg, var(--bg) 0%, var(--accent-soft) 100%); padding-block: 60px 52px; border-bottom: 1px solid var(--border); text-align: center; }
+  .breadcrumb { font-size: 13px; color: var(--fg2); margin-bottom: 16px; }
+  .breadcrumb a { color: var(--accent); text-decoration: none; }
+  .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: var(--fg); text-wrap: balance; margin-bottom: 14px; }
+  .page-header p { font-size: 16px; color: var(--fg2); max-width: 54ch; margin: 0 auto; line-height: 1.7; }
+  .gst-note { display: inline-block; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 999px; margin-top: 14px; border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+
+  section { padding-block: 64px; }
+  .section-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 10px; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(22px, 3vw, 34px); font-weight: 800; color: var(--fg); text-wrap: balance; margin-bottom: 16px; line-height: 1.15; }
+  .section-center { text-align: center; margin-bottom: 48px; }
+  .section-center .section-title { margin-bottom: 12px; }
+  .section-desc { font-size: 15px; color: var(--fg2); line-height: 1.7; max-width: 56ch; margin: 0 auto; }
+
+  /* HOSTING PLANS */
+  .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; align-items: start; }
+  .plan-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; }
+  .plan-card.featured { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent); }
+  .plan-badge { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; background: var(--accent); padding: 3px 10px; border-radius: 999px; display: inline-block; margin-bottom: 14px; }
+  .plan-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--fg); margin-bottom: 6px; }
+  .plan-price { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: var(--fg); font-variant-numeric: tabular-nums; }
+  .plan-price span { font-size: 15px; font-weight: 500; color: var(--fg2); }
+  .plan-desc { font-size: 13px; color: var(--fg2); margin: 12px 0 20px; }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .plan-features li { font-size: 14px; color: var(--fg2); display: flex; align-items: flex-start; gap: 8px; }
+  .plan-features li::before { content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .plan-features li.no::before { content: "–"; color: var(--fg2); }
+  .plan-cta { display: block; text-align: center; padding: 11px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; transition: background 0.15s; }
+  .plan-cta-primary { background: var(--accent); color: #fff; }
+  .plan-cta-primary:hover { background: var(--accent2); }
+  .plan-cta-outline { border: 2px solid var(--accent); color: var(--accent); }
+  .plan-cta-outline:hover { background: var(--accent-soft); }
+
+  /* SERVICES TABLE */
+  .services-bg { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .pricing-table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+  .pricing-table { width: 100%; border-collapse: collapse; min-width: 580px; }
+  .pricing-table th { background: var(--accent); color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; padding: 14px 18px; text-align: left; }
+  .pricing-table th:last-child { text-align: right; }
+  .pricing-table td { padding: 14px 18px; font-size: 14px; border-bottom: 1px solid var(--border); color: var(--fg2); vertical-align: top; }
+  .pricing-table td:first-child { font-weight: 600; color: var(--fg); }
+  .pricing-table td:last-child { text-align: right; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .pricing-table tr:last-child td { border-bottom: none; }
+  .pricing-table tr:hover td { background: var(--accent-soft); }
+  .pricing-table .cat-row td { background: var(--bg); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); padding: 10px 18px; }
+
+  /* ADD-ONS */
+  .addons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .addon-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .addon-name { font-size: 14px; font-weight: 600; color: var(--fg); }
+  .addon-desc { font-size: 12px; color: var(--fg2); margin-top: 4px; }
+  .addon-price { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; flex-shrink: 0; }
+
+  /* NOTE */
+  .note-box { background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); border-radius: 12px; padding: 20px 24px; margin-top: 32px; }
+  .note-box p { font-size: 14px; color: var(--fg); line-height: 1.65; }
+  .note-box p strong { color: var(--accent); }
+
+  footer { background: var(--fg); color: rgba(255,255,255,0.7); padding-block: 40px 28px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left,0px)); padding-right: max(16px, env(safe-area-inset-right,0px)); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 12px; }
+  .footer-links a:hover { color: #fff; }
+  .legal-name { font-weight: 600; color: rgba(255,255,255,0.8); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 4px; background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px max(16px, env(safe-area-inset-left,0px)); }
+    .mobile-menu a { text-decoration: none; color: var(--fg); font-size: 15px; font-weight: 500; padding: 10px 12px; border-radius: 8px; }
+    .mobile-menu a:hover { background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">A</div>
+      <div>
+        <div class="logo-text">Apex Cloud & IT Services</div>
+        <div class="logo-sub">Enterprise IT Solutions</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="pricing.html" class="active">Pricing</a></li>
+      <li><a href="policies.html">Policies</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('mobile-nav').classList.toggle('open')" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="policies.html">Policies</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> → Pricing</div>
+    <h1>Simple, Transparent Pricing</h1>
+    <p>All our service prices are listed clearly below. No hidden fees, no surprise charges. All prices are in Indian Rupees (₹).</p>
+    <div class="gst-note">All prices are inclusive of applicable taxes (GST)</div>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="section-center">
+      <div class="section-label">Web Hosting Plans</div>
+      <h2 class="section-title">Hosting for Every Scale</h2>
+      <p class="section-desc">Choose a plan that fits your website's needs. All plans include free SSL and 24/7 support.</p>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">₹299 <span>/ month</span></div>
+        <div class="plan-desc">For personal sites and small projects</div>
+        <ul class="plan-features">
+          <li>5 GB SSD Storage</li>
+          <li>Unlimited Bandwidth</li>
+          <li>1 Website</li>
+          <li>Free SSL Certificate</li>
+          <li>cPanel Control Panel</li>
+          <li>24/7 Email Support</li>
+          <li class="no">Daily Backups</li>
+          <li class="no">Dedicated IP</li>
+        </ul>
+        <a href="contact.html" class="plan-cta plan-cta-outline">Get Started</a>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Business</div>
+        <div class="plan-price">₹799 <span>/ month</span></div>
+        <div class="plan-desc">For growing business websites</div>
+        <ul class="plan-features">
+          <li>25 GB SSD Storage</li>
+          <li>Unlimited Bandwidth</li>
+          <li>5 Websites</li>
+          <li>Free SSL Certificate</li>
+          <li>cPanel + WHM Access</li>
+          <li>Daily Automated Backups</li>
+          <li>24/7 Chat & Email Support</li>
+          <li class="no">Dedicated IP</li>
+        </ul>
+        <a href="contact.html" class="plan-cta plan-cta-outline">Get Started</a>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Pro Hosting</div>
+        <div class="plan-price">₹1,499 <span>/ month</span></div>
+        <div class="plan-desc">For high-traffic and e-commerce sites</div>
+        <ul class="plan-features">
+          <li>100 GB SSD Storage</li>
+          <li>Unlimited Bandwidth</li>
+          <li>Unlimited Websites</li>
+          <li>Free SSL Certificate</li>
+          <li>cPanel + WHM Access</li>
+          <li>Daily Backups + Off-site Copy</li>
+          <li>Dedicated IP Address</li>
+          <li>Priority 24/7 Support</li>
+        </ul>
+        <a href="contact.html" class="plan-cta plan-cta-primary">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services-bg">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-label">All Services</div>
+      <h2 class="section-title">Complete Service Pricing</h2>
+      <p class="section-desc">Detailed pricing for all our cloud, infrastructure, and IT services.</p>
+    </div>
+    <div class="pricing-table-wrap">
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Description</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="cat-row"><td colspan="3">Cloud Infrastructure</td></tr>
+          <tr>
+            <td>VPS – Basic</td>
+            <td>1 vCPU, 1 GB RAM, 20 GB SSD, 1 TB bandwidth</td>
+            <td>₹999/mo</td>
+          </tr>
+          <tr>
+            <td>VPS – Standard</td>
+            <td>2 vCPU, 4 GB RAM, 50 GB SSD, unlimited bandwidth</td>
+            <td>₹1,999/mo</td>
+          </tr>
+          <tr>
+            <td>VPS – Premium</td>
+            <td>4 vCPU, 8 GB RAM, 100 GB SSD, unlimited bandwidth</td>
+            <td>₹3,499/mo</td>
+          </tr>
+          <tr>
+            <td>Dedicated Server</td>
+            <td>8 vCPU, 16 GB RAM, 500 GB SSD, full control</td>
+            <td>₹7,999/mo</td>
+          </tr>
+          <tr class="cat-row"><td colspan="3">IT Support & Maintenance</td></tr>
+          <tr>
+            <td>Basic IT Support</td>
+            <td>Remote support, up to 5 hours/month, software issues</td>
+            <td>₹1,499/mo</td>
+          </tr>
+          <tr>
+            <td>Standard IT Support</td>
+            <td>Remote + on-site, up to 15 hours/month, maintenance</td>
+            <td>₹3,999/mo</td>
+          </tr>
+          <tr>
+            <td>Enterprise IT Support</td>
+            <td>Dedicated IT resource, unlimited support hours</td>
+            <td>₹9,999/mo</td>
+          </tr>
+          <tr class="cat-row"><td colspan="3">Cybersecurity</td></tr>
+          <tr>
+            <td>Basic Security Package</td>
+            <td>Firewall setup, SSL management, monthly scan</td>
+            <td>₹2,499/mo</td>
+          </tr>
+          <tr>
+            <td>Advanced Security</td>
+            <td>IDS/IPS, DDoS protection, weekly vulnerability scan</td>
+            <td>₹4,999/mo</td>
+          </tr>
+          <tr class="cat-row"><td colspan="3">Business Email Hosting</td></tr>
+          <tr>
+            <td>Business Email</td>
+            <td>10 GB/user, spam protection, mobile sync</td>
+            <td>₹99/user/mo</td>
+          </tr>
+          <tr>
+            <td>Premium Email</td>
+            <td>50 GB/user, priority delivery, archiving</td>
+            <td>₹199/user/mo</td>
+          </tr>
+          <tr class="cat-row"><td colspan="3">Backup & Recovery</td></tr>
+          <tr>
+            <td>Cloud Backup – Basic</td>
+            <td>Daily backups, 30-day retention, 50 GB storage</td>
+            <td>₹699/mo</td>
+          </tr>
+          <tr>
+            <td>Cloud Backup – Pro</td>
+            <td>Hourly backups, 90-day retention, 500 GB storage</td>
+            <td>₹1,999/mo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note-box">
+      <p><strong>Note:</strong> All prices are listed in Indian Rupees (₹) and include applicable taxes. Services are billed monthly or annually (annual billing offers up to 20% discount). Custom pricing is available for enterprise clients. Contact us at <strong>support@apexcloudit.in</strong> for a quote. Payment is accepted via UPI, debit/credit card, net banking, and bank transfer.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">Add-On Services</div>
+    <h2 class="section-title" style="margin-bottom:36px;">Optional Add-Ons</h2>
+    <div class="addons-grid">
+      <div class="addon-card">
+        <div>
+          <div class="addon-name">Domain Registration</div>
+          <div class="addon-desc">.in, .com, .co.in domains</div>
+        </div>
+        <div class="addon-price">₹499/yr</div>
+      </div>
+      <div class="addon-card">
+        <div>
+          <div class="addon-name">SSL Certificate (Premium)</div>
+          <div class="addon-desc">Wildcard SSL for all subdomains</div>
+        </div>
+        <div class="addon-price">₹1,999/yr</div>
+      </div>
+      <div class="addon-card">
+        <div>
+          <div class="addon-name">Dedicated IP Address</div>
+          <div class="addon-desc">Static dedicated IP for your server</div>
+        </div>
+        <div class="addon-price">₹299/mo</div>
+      </div>
+      <div class="addon-card">
+        <div>
+          <div class="addon-name">Server Migration</div>
+          <div class="addon-desc">One-time assisted migration service</div>
+        </div>
+        <div class="addon-price">₹1,499 one-time</div>
+      </div>
+      <div class="addon-card">
+        <div>
+          <div class="addon-name">CDN Setup</div>
+          <div class="addon-desc">Content delivery network configuration</div>
+        </div>
+        <div class="addon-price">₹999 one-time</div>
+      </div>
+      <div class="addon-card">
+        <div>
+          <div class="addon-name">24/7 Monitoring</div>
+          <div class="addon-desc">Real-time uptime and performance alerts</div>
+        </div>
+        <div class="addon-price">₹499/mo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 Apex Cloud & IT Services. Proprietor: <span class="legal-name">ISHWAR PRASAD</span>. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="policies.html">Policies</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

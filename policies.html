@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Policies – Apex Cloud & IT Services</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap">
+<style>
+  :root {
+    --bg: #f8f9fc; --bg2: #ffffff; --fg: #0f1117; --fg2: #4a5568;
+    --accent: #1a56db; --accent2: #1041a3; --accent-soft: #e8eefb;
+    --border: #e2e8f0; --card: #ffffff; --nav-bg: rgba(248,249,252,0.95);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117; --bg2: #161b22; --fg: #e6edf3; --fg2: #8b949e;
+      --accent: #4c8ef7; --accent2: #79acfc; --accent-soft: #0d2149;
+      --border: #21262d; --card: #161b22; --nav-bg: rgba(13,17,23,0.95);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1117; --bg2: #161b22; --fg: #e6edf3; --fg2: #8b949e;
+    --accent: #4c8ef7; --accent2: #79acfc; --accent-soft: #0d2149;
+    --border: #21262d; --card: #161b22; --nav-bg: rgba(13,17,23,0.95);
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; }
+  nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left,0px)) 0 max(16px, env(safe-area-inset-right,0px)); display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; font-weight: 800; font-family: 'Syne', sans-serif; }
+  .logo-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); line-height: 1.2; }
+  .logo-sub { font-size: 10px; color: var(--fg2); }
+  .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--fg2); font-size: 14px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); background: var(--accent-soft); }
+  .nav-cta { background: var(--accent); color: #fff !important; border-radius: 8px; padding: 8px 16px !important; }
+  .nav-cta:hover { background: var(--accent2) !important; }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--fg); padding: 4px; }
+  .mobile-menu { display: none; }
+  .container { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left,0px)); padding-right: max(16px, env(safe-area-inset-right,0px)); }
+
+  .page-header { background: linear-gradient(160deg, var(--bg) 0%, var(--accent-soft) 100%); padding-block: 60px 52px; border-bottom: 1px solid var(--border); text-align: center; }
+  .breadcrumb { font-size: 13px; color: var(--fg2); margin-bottom: 16px; }
+  .breadcrumb a { color: var(--accent); text-decoration: none; }
+  .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: var(--fg); text-wrap: balance; margin-bottom: 14px; }
+  .page-header p { font-size: 16px; color: var(--fg2); max-width: 54ch; margin: 0 auto; line-height: 1.7; }
+
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 48px; padding-block: 64px; align-items: start; }
+
+  /* SIDEBAR NAV */
+  .sidebar { position: sticky; top: 84px; }
+  .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg2); margin-bottom: 12px; }
+  .sidebar-links { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-links a { display: block; text-decoration: none; color: var(--fg2); font-size: 13px; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: all 0.15s; border-left: 2px solid transparent; }
+  .sidebar-links a:hover { color: var(--accent); background: var(--accent-soft); border-left-color: var(--accent); }
+  .sidebar-links a.active { color: var(--accent); background: var(--accent-soft); border-left-color: var(--accent); }
+  .sidebar-divider { height: 1px; background: var(--border); margin: 8px 0; }
+
+  /* CONTENT */
+  .policy-section { margin-bottom: 56px; scroll-margin-top: 90px; }
+  .policy-section:last-child { margin-bottom: 0; }
+  .policy-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 10px; display: block; }
+  .policy-section h2 { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--fg); margin-bottom: 6px; padding-bottom: 14px; border-bottom: 2px solid var(--accent); display: inline-block; }
+  .policy-updated { font-size: 12px; color: var(--fg2); margin-bottom: 20px; }
+  .policy-body h3 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--fg); margin: 24px 0 10px; }
+  .policy-body p { font-size: 14px; color: var(--fg2); margin-bottom: 12px; line-height: 1.75; max-width: 70ch; }
+  .policy-body ul { padding-left: 20px; margin-bottom: 14px; }
+  .policy-body ul li { font-size: 14px; color: var(--fg2); margin-bottom: 6px; line-height: 1.65; }
+  .policy-body strong { color: var(--fg); }
+  .info-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+  .info-box p { font-size: 13px; color: var(--fg); margin: 0; }
+  .info-box p strong { color: var(--accent); }
+
+  .business-info-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .bib-row { display: flex; gap: 10px; font-size: 14px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .bib-row:last-child { border-bottom: none; }
+  .bib-label { font-weight: 600; color: var(--fg2); min-width: 160px; }
+  .bib-val { color: var(--fg); }
+
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+
+  footer { background: var(--fg); color: rgba(255,255,255,0.7); padding-block: 40px 28px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left,0px)); padding-right: max(16px, env(safe-area-inset-right,0px)); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 12px; }
+  .footer-links a:hover { color: #fff; }
+  .legal-name { font-weight: 600; color: rgba(255,255,255,0.8); }
+
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 4px; background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px max(16px, env(safe-area-inset-left,0px)); }
+    .mobile-menu a { text-decoration: none; color: var(--fg); font-size: 15px; font-weight: 500; padding: 10px 12px; border-radius: 8px; }
+    .mobile-menu a:hover { background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">A</div>
+      <div>
+        <div class="logo-text">Apex Cloud & IT Services</div>
+        <div class="logo-sub">Enterprise IT Solutions</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="policies.html" class="active">Policies</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('mobile-nav').classList.toggle('open')" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="policies.html">Policies</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> → Policies</div>
+    <h1>Policies & Legal</h1>
+    <p>All policies governing use of Apex Cloud & IT Services. Last updated: November 2026.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On This Page</div>
+      <ul class="sidebar-links" id="sidebarLinks">
+        <li><a href="#terms">Terms of Service</a></li>
+        <li><a href="#privacy">Privacy Policy</a></li>
+        <div class="sidebar-divider"></div>
+        <li><a href="#refund">Refund Policy</a></li>
+        <li><a href="#shipping">Delivery Policy</a></li>
+        <li><a href="#cancellation">Cancellation Policy</a></li>
+      </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main>
+
+      <!-- TERMS -->
+      <section id="terms" class="policy-section">
+        <span class="policy-tag">Legal Agreement</span>
+        <h2>Terms of Service</h2>
+        <div class="policy-updated">Effective date: 1 November 2026</div>
+        <div class="business-info-box">
+          <div class="bib-row"><span class="bib-label">Business Name</span><span class="bib-val">Apex Cloud & IT Services</span></div>
+          <div class="bib-row"><span class="bib-label">Legal Name / Proprietor</span><span class="bib-val"><strong>ISHWAR PRASAD</strong></span></div>
+          <div class="bib-row"><span class="bib-label">Business Type</span><span class="bib-val">Sole Proprietorship</span></div>
+          <div class="bib-row"><span class="bib-label">Operating Address</span><span class="bib-val">[House/Flat No.], [Street / Colony Name], [City], [State] – [PIN Code], India</span></div>
+          <div class="bib-row"><span class="bib-label">Email</span><span class="bib-val">support@apexcloudit.in</span></div>
+        </div>
+        <div class="policy-body">
+          <h3>1. Acceptance of Terms</h3>
+          <p>By accessing or using any service provided by Apex Cloud & IT Services (operated by <strong>ISHWAR PRASAD</strong>, hereinafter "we", "us", or "Company"), you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use our services.</p>
+
+          <h3>2. Description of Services</h3>
+          <p>Apex Cloud & IT Services provides web hosting, cloud infrastructure, IT support, cybersecurity, business email hosting, and backup solutions. Services are described in detail on our <a href="pricing.html" style="color:var(--accent)">Pricing page</a>.</p>
+
+          <h3>3. User Responsibilities</h3>
+          <ul>
+            <li>You must provide accurate, current, and complete information during registration.</li>
+            <li>You are responsible for maintaining the security of your account credentials.</li>
+            <li>You agree not to use our services for unlawful, abusive, or fraudulent purposes.</li>
+            <li>You shall not attempt to interfere with the proper functioning of our servers or infrastructure.</li>
+            <li>Hosting of illegal content, spam operations, or malware is strictly prohibited and will result in immediate service termination.</li>
+          </ul>
+
+          <h3>4. Service Availability</h3>
+          <p>We strive for 99.9% uptime for all hosting and cloud services. Scheduled maintenance windows will be communicated 48 hours in advance. We are not liable for outages caused by factors beyond our control (force majeure events, third-party network issues, etc.).</p>
+
+          <h3>5. Payment Terms</h3>
+          <p>All services are billed monthly or annually in Indian Rupees (₹). Payments must be made in advance. Failed payments may result in service suspension after a 7-day grace period. We accept UPI, debit/credit card, net banking, and bank transfer.</p>
+
+          <h3>6. Intellectual Property</h3>
+          <p>All content, branding, and technology owned by Apex Cloud & IT Services remains our exclusive property. Customer data uploaded to our servers remains the property of the customer.</p>
+
+          <h3>7. Limitation of Liability</h3>
+          <p>To the maximum extent permitted by Indian law, Apex Cloud & IT Services shall not be liable for indirect, incidental, or consequential damages arising from use or inability to use our services. Our total liability for direct damages is limited to the amount paid by you in the last 3 months.</p>
+
+          <h3>8. Governing Law</h3>
+          <p>These terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of courts in [your city/state], India.</p>
+
+          <h3>9. Changes to Terms</h3>
+          <p>We may update these Terms at any time. Continued use of our services after notification constitutes acceptance of the new terms.</p>
+
+          <h3>10. Contact</h3>
+          <p>For any questions about these Terms, contact us at <strong>support@apexcloudit.in</strong> or visit our <a href="contact.html" style="color:var(--accent)">Contact page</a>.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- PRIVACY -->
+      <section id="privacy" class="policy-section">
+        <span class="policy-tag">Data Protection</span>
+        <h2>Privacy Policy</h2>
+        <div class="policy-updated">Effective date: 1 November 2026</div>
+        <div class="policy-body">
+          <p>Apex Cloud & IT Services (Proprietor: <strong>ISHWAR PRASAD</strong>) is committed to protecting your personal data in accordance with the Information Technology Act, 2000 and the Digital Personal Data Protection Act, 2023 (India).</p>
+
+          <h3>1. Information We Collect</h3>
+          <ul>
+            <li><strong>Account information:</strong> Name, email address, phone number, and billing address provided during registration.</li>
+            <li><strong>Payment information:</strong> Processed securely by our payment gateway (PayU). We do not store card details.</li>
+            <li><strong>Usage data:</strong> Server logs, IP addresses, browser type, and pages visited for security and service improvement.</li>
+            <li><strong>Support communications:</strong> Emails and messages you send to our support team.</li>
+          </ul>
+
+          <h3>2. How We Use Your Information</h3>
+          <ul>
+            <li>To provision, manage, and support the services you have subscribed to.</li>
+            <li>To process payments and issue invoices.</li>
+            <li>To send service notifications, security alerts, and billing reminders.</li>
+            <li>To improve our services and troubleshoot issues.</li>
+            <li>To comply with legal obligations.</li>
+          </ul>
+
+          <h3>3. Data Sharing</h3>
+          <p>We do not sell, rent, or share your personal data with third parties for marketing purposes. We may share data with:</p>
+          <ul>
+            <li>Payment processors (PayU) to process transactions.</li>
+            <li>Legal authorities if required by law or court order.</li>
+            <li>Service providers who assist in operating our infrastructure, under strict confidentiality agreements.</li>
+          </ul>
+
+          <h3>4. Data Retention</h3>
+          <p>We retain customer data for as long as your account is active, plus 3 years thereafter for legal and accounting purposes. You may request deletion of your data by contacting us at <strong>support@apexcloudit.in</strong>.</p>
+
+          <h3>5. Security</h3>
+          <p>We use industry-standard encryption (SSL/TLS), firewalls, and access controls to protect your data. All staff with data access are bound by confidentiality obligations.</p>
+
+          <h3>6. Cookies</h3>
+          <p>Our website uses essential cookies for session management and security. We do not use tracking cookies for advertising purposes.</p>
+
+          <h3>7. Your Rights</h3>
+          <p>You have the right to access, correct, or delete your personal data. Contact us at <strong>support@apexcloudit.in</strong> to exercise these rights. We will respond within 30 days.</p>
+
+          <h3>8. Contact</h3>
+          <p>For privacy-related queries: <strong>support@apexcloudit.in</strong> | Proprietor: <strong>ISHWAR PRASAD</strong></p>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- REFUND -->
+      <section id="refund" class="policy-section">
+        <span class="policy-tag">Financial</span>
+        <h2>Refund Policy</h2>
+        <div class="policy-updated">Effective date: 1 November 2026</div>
+        <div class="policy-body">
+          <div class="info-box">
+            <p><strong>Summary:</strong> We offer a 7-day money-back guarantee on new hosting and cloud plans. Refunds are not available for domain registrations, one-time setup fees, or add-on services used.</p>
+          </div>
+
+          <h3>1. Eligibility for Refund</h3>
+          <ul>
+            <li>Refund requests must be submitted within <strong>7 calendar days</strong> of the initial payment date.</li>
+            <li>Eligible services: Web Hosting (Starter, Business, Pro), VPS / Cloud plans (first month only).</li>
+            <li>Refunds apply only to new customers on their first subscription, not renewals or upgrades.</li>
+          </ul>
+
+          <h3>2. Non-Refundable Items</h3>
+          <ul>
+            <li>Domain name registrations and renewals (once registered, the cost is non-recoverable).</li>
+            <li>One-time setup fees, migration fees, and professional services.</li>
+            <li>SSL certificates already issued.</li>
+            <li>Add-on services that have been provisioned and used (e.g., CDN, monitoring).</li>
+            <li>Services cancelled after 7 days of purchase.</li>
+            <li>Accounts suspended or terminated due to violations of our Terms of Service.</li>
+          </ul>
+
+          <h3>3. Refund Process</h3>
+          <ul>
+            <li>Submit your refund request to <strong>support@apexcloudit.in</strong> with your order ID and reason for refund.</li>
+            <li>Refunds are processed within <strong>5–7 business days</strong> of approval.</li>
+            <li>Approved refunds are credited to the original payment method (UPI, card, or bank account).</li>
+            <li>Bank processing time may add an additional 3–5 business days.</li>
+          </ul>
+
+          <h3>4. Service Credits</h3>
+          <p>In cases of prolonged unscheduled downtime exceeding our 99.9% SLA, we may issue service credits to your account for the affected period. Credits cannot be converted to cash.</p>
+
+          <h3>5. How to Request a Refund</h3>
+          <p>Email us at <strong>support@apexcloudit.in</strong> with the subject line "Refund Request – [Your Order ID]" or visit our <a href="contact.html" style="color:var(--accent)">Contact page</a>.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- SHIPPING / DELIVERY -->
+      <section id="shipping" class="policy-section">
+        <span class="policy-tag">Service Delivery</span>
+        <h2>Delivery Policy</h2>
+        <div class="policy-updated">Effective date: 1 November 2026</div>
+        <div class="policy-body">
+          <div class="info-box">
+            <p><strong>Note:</strong> Apex Cloud & IT Services provides digital/online services only. No physical products are shipped. This policy describes how and when services are delivered.</p>
+          </div>
+
+          <h3>1. Nature of Services</h3>
+          <p>All services provided by Apex Cloud & IT Services are digital in nature — including web hosting, cloud VPS, IT support, cybersecurity, email hosting, and backup solutions. There is no physical delivery of goods.</p>
+
+          <h3>2. Service Activation Timelines</h3>
+          <ul>
+            <li><strong>Web Hosting:</strong> Activated within <strong>2–4 hours</strong> of payment confirmation.</li>
+            <li><strong>VPS / Cloud Plans:</strong> Activated within <strong>4–12 hours</strong> of payment confirmation.</li>
+            <li><strong>Business Email Hosting:</strong> Setup completed within <strong>24 hours</strong>.</li>
+            <li><strong>IT Support Plans:</strong> Onboarding call scheduled within <strong>24–48 hours</strong>.</li>
+            <li><strong>Cybersecurity Services:</strong> Initial assessment scheduled within <strong>2 business days</strong>.</li>
+            <li><strong>Backup & Recovery:</strong> Configuration completed within <strong>24 hours</strong>.</li>
+          </ul>
+
+          <h3>3. Delivery Method</h3>
+          <ul>
+            <li>Service credentials (login details, server IPs, control panel access) are delivered via email to the registered email address.</li>
+            <li>Welcome documentation and onboarding guides are sent digitally.</li>
+            <li>Remote IT support is delivered via screen sharing, phone, or on-site visit (as per plan).</li>
+          </ul>
+
+          <h3>4. Delays</h3>
+          <p>If your service is not activated within the stated timeframe, please contact us at <strong>support@apexcloudit.in</strong>. Delays caused by incorrect account information provided by the customer are not covered under this timeline guarantee.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- CANCELLATION -->
+      <section id="cancellation" class="policy-section">
+        <span class="policy-tag">Subscription Management</span>
+        <h2>Cancellation Policy</h2>
+        <div class="policy-updated">Effective date: 1 November 2026</div>
+        <div class="policy-body">
+          <h3>1. How to Cancel</h3>
+          <p>You may cancel your subscription at any time by:</p>
+          <ul>
+            <li>Emailing <strong>support@apexcloudit.in</strong> with your account details and cancellation request.</li>
+            <li>Contacting us via our <a href="contact.html" style="color:var(--accent)">Contact page</a> with the subject "Service Cancellation – [Your Account ID]".</li>
+          </ul>
+
+          <h3>2. Cancellation Timeline</h3>
+          <ul>
+            <li>Cancellation requests are processed within <strong>2 business days</strong>.</li>
+            <li>Services remain active until the end of your current billing period.</li>
+            <li>No prorated refund is issued for the unused portion of the current billing period (except under the 7-day refund window — see <a href="#refund" style="color:var(--accent)">Refund Policy</a>).</li>
+          </ul>
+
+          <h3>3. Data Retention After Cancellation</h3>
+          <ul>
+            <li>Your data (files, databases, emails) is retained for <strong>15 days</strong> after the service end date.</li>
+            <li>You are responsible for backing up your data before cancellation. After 15 days, all data is permanently deleted.</li>
+            <li>We are not liable for data loss following the 15-day post-cancellation window.</li>
+          </ul>
+
+          <h3>4. Auto-Renewal</h3>
+          <p>All subscription plans are set to auto-renew by default. You will receive a renewal reminder email <strong>7 days before</strong> your renewal date. To disable auto-renewal, contact us before the renewal date.</p>
+
+          <h3>5. Termination by Apex Cloud & IT Services</h3>
+          <p>We reserve the right to suspend or terminate services immediately — without refund — in cases of:</p>
+          <ul>
+            <li>Violation of our Terms of Service.</li>
+            <li>Hosting of illegal, abusive, or malicious content.</li>
+            <li>Non-payment beyond the 7-day grace period.</li>
+            <li>Chargeback or payment disputes initiated without prior communication.</li>
+          </ul>
+
+          <h3>6. Contact</h3>
+          <p>For cancellation inquiries: <strong>support@apexcloudit.in</strong> | Proprietor: <strong>ISHWAR PRASAD</strong></p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 Apex Cloud & IT Services. Proprietor: <span class="legal-name">ISHWAR PRASAD</span>. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="policies.html">Policies</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('.policy-section');
+const links = document.querySelectorAll('.sidebar-links a');
+function onScroll() {
+  let current = '';
+  sections.forEach(s => {
+    const top = s.getBoundingClientRect().top;
+    if (top <= 120) current = s.id;
+  });
+  links.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+</script>
+</body>
+</html>
